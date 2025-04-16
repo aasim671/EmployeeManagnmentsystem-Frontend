@@ -1,0 +1,27 @@
+<header>
+  <mat-toolbar style="background-color: rgb(163, 98, 224); color: white;">
+    <button mat-icon-button (click)="drawer.toggle()" aria-label="Toggle drawer">
+      <mat-icon style="color: white;">menu</mat-icon>
+    </button>
+    <span>Employee Management System</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+</header>
+
+
+<mat-drawer-container style="height: 100vh; background-color:rgb(218, 187, 187) ;">
+  <!-- Sidebar (Drawer) -->
+  <mat-drawer #drawer mode="side" [opened]="true" style="width: 300px; background-color: rgb(218, 187, 187); padding: 16px;">
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: 700;   gap: 27px; margin-top: 36px;">
+  <a routerLink="/" style="color: white;">Dashboard</a>
+  <a routerLink="/departments" style="color: white;">Departments</a>
+</div>
+  </mat-drawer>
+
+  <!-- Main Content -->
+  <mat-drawer-content style="padding: 16px; background-color: lightgray;">
+    <main>
+    <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>

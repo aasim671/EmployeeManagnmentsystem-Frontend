@@ -1,0 +1,15 @@
+<div class="dialog-content-wrapper">
+  <h4>New Department</h4>
+
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Name of Department</mat-label>
+      <input matInput [(ngModel)]="departmentName" />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button mat-flat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-flat-button color="primary" (click)="onYesClick()">Save</button>
+  </mat-dialog-actions>
+</div>
