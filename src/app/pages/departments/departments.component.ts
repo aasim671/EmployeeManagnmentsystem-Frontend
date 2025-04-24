@@ -39,6 +39,10 @@ export class DepartmentsComponent {
     this.getDepartments();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -46,10 +50,7 @@ export class DepartmentsComponent {
 
   getDepartments() {
     this.httpService.getDepartments().subscribe((result) => {
-      this.dataSource = new MatTableDataSource<IDepartment>(
-        Array.isArray(result) ? result : []
-      );
-      this.dataSource.paginator = this.paginator;
+      this.dataSource.data = Array.isArray(result) ? result : [];
     });
   }
 
@@ -61,9 +62,8 @@ export class DepartmentsComponent {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        console.log('New Department:', result);
         this.httpService.addDepartment(result).subscribe(() => {
-          this.getDepartments(); // Refresh after add
+          this.getDepartments(); // Refresh after adding
         });
       }
     });
@@ -77,23 +77,22 @@ export class DepartmentsComponent {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result && result !== department.name) {
-        this.httpService.updateDepartment(department, department.id).subscribe((res: any) => {
-   this.getDepartments();
+        const updatedDepartment = {
+          id: department.id,
+          name: result
+        };
+
+        this.httpService.updateDepartment(updatedDepartment).subscribe(() => {
+          this.getDepartments();
         });
       }
-   
     });
   }
-  
 
-  deleteDepartment(id:any){
-    this.httpService.deleteDepartment(id).subscribe((result) => {
-    console.log('deleted Successfully!')
-    this.getDepartments();
-    //not refreshing
-    }
-    
-    )
-   
+  deleteDepartment(id: any) {
+    this.httpService.deleteDepartment(id).subscribe(() => {
+      this.getDepartments();
+    });
   }
 }
+

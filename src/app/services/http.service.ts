@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IDepartment } from '../types/departmetn';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,10 @@ apiUrl= 'https://localhost:7284/'
   }
 
 
-  updateDepartment(name: string, id: string) {
-    return this.http.put<IDepartment>(this.apiUrl + 'api/Department' + id , {
-      name:name
-     } )
-    }
+  updateDepartment(department: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}api/Department/${department.id}`, department);
+  }
+  
     deleteDepartment(id: string) {
       return this.http.delete<IDepartment>(`${this.apiUrl}api/Department/${id}`);
     }
